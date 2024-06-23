@@ -1,7 +1,12 @@
-import "./App.css";
+import AuthorsList from "./components/authors_list";
 
 function App() {
-	return <>Siema</>;
+	return (
+		<>
+			siema
+			<AuthorsList />
+		</>
+	);
 }
 
 export default App;
