@@ -4,11 +4,16 @@ import {
 	createTheme,
 	useMediaQuery
 } from "@mui/material";
-import { useMemo } from "react";
+import { createContext, useMemo } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ToastContainer } from "react-toastify";
+import { API } from "./api";
 
 const queryClient = new QueryClient();
+
+const api = new API("http://localhost:8000");
+
+export const apiContext = createContext(api);
 
 export default function ProviderWrapper({
 	children
@@ -31,12 +36,16 @@ export default function ProviderWrapper({
 			<ThemeProvider theme={theme}>
 				<CssBaseline />
 				<QueryClientProvider client={queryClient}>
-					{children}
-					{/*  */}
+					<apiContext.Provider value={api}>
+						{children}
+						{/*  */}
+					</apiContext.Provider>
 				</QueryClientProvider>
 			</ThemeProvider>
 			<ToastContainer
 				position="bottom-right"
+				limit={5}
+				closeOnClick
 				theme={prefersDarkMode ? "light" : "dark"}
 			/>
 		</>
